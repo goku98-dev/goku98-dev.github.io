@@ -10,10 +10,9 @@
 /* ===== GLOBAL ===== */
 body {
   margin:0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   background: radial-gradient(circle at top, #0f172a, #020617);
   color:#e2e8f0;
-  overflow-x:hidden;
 }
 
 /* BACKGROUND GLOW */
@@ -41,12 +40,14 @@ body::after {
 
 /* ===== HEADER ===== */
 header {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
   text-align:center;
-  padding:80px 20px;
+  padding:70px 20px;
 }
 
 header h1 {
   font-size:3rem;
+  margin-bottom:10px;
   background: linear-gradient(90deg, #38bdf8, #a78bfa);
   -webkit-background-clip:text;
   color:transparent;
@@ -58,8 +59,8 @@ header p {
 
 header a {
   color:#38bdf8;
-  margin:0 10px;
   text-decoration:none;
+  margin:0 10px;
   font-weight:500;
 }
 
@@ -71,34 +72,24 @@ section {
 }
 
 h2 {
-  font-size:1.5rem;
+  border-left:4px solid #38bdf8;
+  padding-left:10px;
   margin-bottom:20px;
-  position:relative;
 }
 
-h2::after {
-  content:'';
-  width:50px;
-  height:3px;
-  background:#38bdf8;
-  position:absolute;
-  left:0;
-  bottom:-5px;
-}
-
-/* ===== GLASS CARD ===== */
+/* ===== CARDS ===== */
 .card {
-  background: rgba(30,41,59,0.5);
+  background: rgba(30,41,59,0.6);
   backdrop-filter: blur(10px);
-  border:1px solid rgba(255,255,255,0.1);
   padding:20px;
   margin:20px 0;
   border-radius:16px;
   transition:0.3s;
+  border:1px solid rgba(255,255,255,0.08);
 }
 
 .card:hover {
-  transform:translateY(-8px) scale(1.01);
+  transform:translateY(-8px);
   box-shadow:0 0 25px rgba(56,189,248,0.3);
 }
 
@@ -109,7 +100,7 @@ h2::after {
   gap:20px;
 }
 
-/* ===== SKILLS TAGS ===== */
+/* ===== SKILLS ===== */
 .skills span {
   display:inline-block;
   background:linear-gradient(90deg,#38bdf8,#a78bfa);
@@ -141,7 +132,8 @@ a {
 footer {
   text-align:center;
   padding:20px;
-  color:#64748b;
+  background:#020617;
+  color:#94a3b8;
 }
 
 </style>
@@ -161,32 +153,51 @@ footer {
 
 <section>
   <h2>🧠 Summary</h2>
-  <div class="card">
-    MSc Digital Engineering student with 3+ years of experience in data analytics, ETL pipelines, and machine learning.
-    Skilled in Python, SQL, Power BI, and building data-driven solutions for business insights.
-  </div>
+  <ul>
+    <li>MSc Digital Engineering (Computer Science) student with 3+ years of experience in data analytics and business intelligence.</li>
+    <li>Strong expertise in Python (pandas, NumPy), SQL, and Power BI for data analysis, visualization, and KPI-driven reporting.</li>
+    <li>Experienced in building ETL pipelines, performing exploratory data analysis (EDA), and applying statistical methods to transform complex datasets into actionable insights.</li>
+    <li>Skilled in designing interactive dashboards and delivering data-driven solutions for business decision-making.</li>
+    <li>Advanced user of Excel and MS Office tools with experience in documentation, reporting, and cross-functional stakeholder communication.</li>
+  </ul>
 </section>
 
 <section>
-  <h2>💼 Experience</h2>
+  <h2>💼 Professional Experience</h2>
 
   <div class="card">
-    <h3>Applied Research Assistant – OVGU</h3>
-    <p>Feb 2025 – Present</p>
+    <h3>Applied Research Assistant – Otto von Guericke University</h3>
+    <p><i>Feb 2025 – Present</i></p>
     <ul>
-      <li>Processed 10,000+ behavioral datasets</li>
-      <li>Built data pipelines using Python</li>
-      <li>Developed dashboards with Streamlit</li>
+      <li>Designed scalable data pipelines using Python (NumPy, pandas) to process 10,000+ behavioral and gaze-tracking records.</li>
+      <li>Built structured datasets using PostgreSQL for efficient querying and reproducible analytics workflows.</li>
+      <li>Performed EDA and statistical analysis to identify trends, correlations, and anomalies.</li>
+      <li>Developed interactive dashboards using Plotly and Streamlit to present insights.</li>
+      <li>Documented workflows and data models using Excel, Word, SharePoint, and Outlook.</li>
     </ul>
   </div>
 
   <div class="card">
     <h3>Data Analyst – Société Générale</h3>
-    <p>2021 – 2024</p>
+    <p><i>Sept 2021 – March 2024</i></p>
     <ul>
-      <li>Built ETL pipelines and dashboards</li>
-      <li>Improved performance by 25%</li>
-      <li>Automated workflows</li>
+      <li>Built end-to-end ETL pipelines using Python and SQL for large-scale transactional data.</li>
+      <li>Optimized SQL queries, improving performance by ~25%.</li>
+      <li>Developed 15+ dashboards using Power BI and Tableau for business insights.</li>
+      <li>Automated data workflows, reducing manual effort by ~30%.</li>
+      <li>Performed EDA using Python and Excel to identify trends and anomalies.</li>
+      <li>Contributed to MY Ayvens product lifecycle, improving data access speed by ~30%.</li>
+      <li>Maintained documentation using Jira, Confluence, and MS Office tools.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Machine Learning Intern – Pyze</h3>
+    <p><i>June 2020 – Aug 2020</i></p>
+    <ul>
+      <li>Performed EDA and feature engineering for ML models.</li>
+      <li>Validated models using statistical metrics and cross-validation.</li>
+      <li>Built visualizations for model performance analysis.</li>
     </ul>
   </div>
 
@@ -194,14 +205,37 @@ footer {
 
 <section>
   <h2>⚙️ Skills</h2>
-  <div class="skills">
-    <span>Python</span>
-    <span>SQL</span>
-    <span>Power BI</span>
-    <span>Machine Learning</span>
-    <span>ETL</span>
-    <span>Streamlit</span>
+
+  <div class="card">
+    <h3>📊 Data Analytics</h3>
+    <p>Python (pandas, NumPy), Data Cleaning, ETL Pipelines, EDA, Feature Engineering, Statistical Analysis</p>
   </div>
+
+  <div class="card">
+    <h3>🤖 Machine Learning & AI</h3>
+    <p>TensorFlow, PyTorch, Scikit-learn, LLMs, LangChain, HuggingFace Transformers</p>
+  </div>
+
+  <div class="card">
+    <h3>📈 Visualization</h3>
+    <p>Power BI, Tableau, Plotly, Matplotlib, KPI Dashboards, Interactive Reporting</p>
+  </div>
+
+  <div class="card">
+    <h3>🗄️ Databases</h3>
+    <p>SQL Optimization, PostgreSQL, MongoDB, Data Transformation</p>
+  </div>
+
+  <div class="card">
+    <h3>🛠️ Tools & Workflow</h3>
+    <p>Git, CI/CD, Jupyter, Postman, Linux (bash), Agile Methodologies</p>
+  </div>
+
+  <div class="card">
+    <h3>📄 Productivity</h3>
+    <p>Excel, Google Sheets, MS Office Suite, Documentation & Reporting</p>
+  </div>
+
 </section>
 
 <section>
@@ -212,19 +246,46 @@ footer {
     <div class="card">
       <h3>🌌 3D Image Retrieval System</h3>
       <p>ResNet50 + UMAP + HDBSCAN + Unity</p>
-      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Exploratory%20Information%20Retrieval%20with%20Hierarchical%203D%20Visualization#readme">📄 Readme</a>
-      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Exploratory%20Information%20Retrieval%20with%20Hierarchical%203D%20Visualization">💻 Code</a>
+      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Exploratory%20Information%20Retrieval%20with%20Hierarchical%203D%20Visualization#readme" target="_blank">📄 Readme</a>
+      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Exploratory%20Information%20Retrieval%20with%20Hierarchical%203D%20Visualization" target="_blank">💻 Code</a>
     </div>
 
     <div class="card">
       <h3>🚗 Car Rental Analytics</h3>
-      <p>PostgreSQL + ML + Streamlit</p>
-      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Car_rental_analytics#readme">📄 Readme</a>
-      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Car_rental_analytics">💻 Code</a>
+      <p>PostgreSQL + ML + Streamlit Dashboard</p>
+      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Car_rental_analytics#readme" target="_blank">📄 Readme</a>
+      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Car_rental_analytics" target="_blank">💻 Code</a>
+    </div>
+
+    <div class="card">
+      <h3>🤖 Multi-PDF Chat AI</h3>
+      <p>LLM-based document Q&A system</p>
+      <a href="https://github.com/goku98-dev/Projects-DEV/blob/main/Multi-PDFs_ChatApp_LLM_AgentAI-main/README.md" target="_blank">📄 Readme</a>
+      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Multi-PDFs_ChatApp_LLM_AgentAI-main" target="_blank">💻 Code</a>
     </div>
 
   </div>
 
+</section>
+
+<section>
+  <h2>🎓 Education</h2>
+  <div class="card">MSc Digital Engineering – OVGU</div>
+  <div class="card">B.E Electronics & Communication – RNSIT</div>
+</section>
+
+<section>
+  <h2>🌍 Languages</h2>
+  <p>German (B1) | English (C1)</p>
+</section>
+
+<section>
+  <h2>🏆 Awards</h2>
+  <ul>
+    <li>Best Project Award</li>
+    <li>SPOT Award – Société Générale</li>
+    <li>ML & LangChain Certifications</li>
+  </ul>
 </section>
 
 <footer>
