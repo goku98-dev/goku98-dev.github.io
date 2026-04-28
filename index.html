@@ -3,314 +3,1026 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gokul Venugopal | Portfolio</title>
+<title>Gokul Venugopal — Data & AI/ML Engineer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
+/* ===== TOKENS ===== */
+:root {
+  --bg-0: #0a0a0c;
+  --bg-1: #111114;
+  --bg-2: #16161a;
+  --ink-0: #f5f1e8;
+  --ink-1: #d4cfc1;
+  --ink-2: #8a8578;
+  --ink-3: #4a4740;
+  --line: rgba(245, 241, 232, 0.08);
+  --line-strong: rgba(245, 241, 232, 0.18);
+  --accent: #ff5722;
+  --accent-soft: #ffb38a;
+  --accent-2: #5eead4;
+  --glow: rgba(255, 87, 34, 0.35);
 
-/* ===== GLOBAL ===== */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
-  margin:0;
-  font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top, #0f172a, #020617);
-  color:#e2e8f0;
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 300;
+  background: var(--bg-0);
+  color: var(--ink-1);
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none;
 }
 
-/* BACKGROUND GLOW */
-body::before {
-  content:'';
-  position:fixed;
-  width:600px;
-  height:600px;
-  background: radial-gradient(circle, rgba(56,189,248,0.2), transparent);
-  top:-100px;
-  left:-100px;
-  z-index:-1;
+/* ===== CUSTOM CURSOR ===== */
+.cursor {
+  position: fixed; width: 8px; height: 8px;
+  background: var(--accent); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+}
+.cursor-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 1px solid var(--accent); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  transform: translate(-50%, -50%);
+}
+.cursor-ring.hover {
+  width: 64px; height: 64px;
+  border-color: var(--accent-2);
+  background: rgba(94, 234, 212, 0.05);
+}
+@media (max-width: 768px), (pointer: coarse) {
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
 }
 
-body::after {
-  content:'';
-  position:fixed;
-  width:600px;
-  height:600px;
-  background: radial-gradient(circle, rgba(139,92,246,0.2), transparent);
-  bottom:-100px;
-  right:-100px;
-  z-index:-1;
+/* ===== BACKGROUND ATMOSPHERE ===== */
+.bg-grid {
+  position: fixed; inset: 0; z-index: -2;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+.bg-aurora {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+}
+.bg-aurora::before, .bg-aurora::after {
+  content: ''; position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  filter: blur(120px); opacity: 0.35;
+  animation: float 20s ease-in-out infinite;
+}
+.bg-aurora::before {
+  background: radial-gradient(circle, var(--accent), transparent 70%);
+  top: -200px; left: -200px;
+}
+.bg-aurora::after {
+  background: radial-gradient(circle, var(--accent-2), transparent 70%);
+  bottom: -200px; right: -200px;
+  animation-delay: -10s;
+}
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(60px, -40px) scale(1.15); }
+}
+.noise {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ===== HEADER ===== */
-header {
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  text-align:center;
-  padding:70px 20px;
+/* ===== NAV ===== */
+nav.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 40px;
+  background: rgba(10, 10, 12, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono); font-size: 13px;
+}
+nav.topbar .logo { color: var(--ink-0); font-weight: 500; letter-spacing: -0.02em; }
+nav.topbar .logo .dot { color: var(--accent); }
+nav.topbar ul {
+  display: flex; gap: 28px; list-style: none; margin: 0; padding: 0;
+  counter-reset: navcount;
+}
+nav.topbar li { counter-increment: navcount; }
+nav.topbar a { color: var(--ink-2); text-decoration: none; transition: color 0.2s; }
+nav.topbar a::before {
+  content: counter(navcount, decimal-leading-zero) ' ';
+  color: var(--ink-3); margin-right: 6px;
+}
+nav.topbar a:hover { color: var(--accent); }
+@media (max-width: 720px) {
+  nav.topbar { padding: 16px 20px; }
+  nav.topbar ul { display: none; }
 }
 
-header h1 {
-  font-size:3rem;
-  margin-bottom:10px;
-  background: linear-gradient(90deg, #38bdf8, #a78bfa);
-  -webkit-background-clip:text;
-  color:transparent;
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: grid; align-content: center;
+  padding: 140px 40px 60px;
+  max-width: 1280px; margin: 0 auto;
+  position: relative;
+}
+.hero .meta {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--ink-2);
+  text-transform: uppercase; letter-spacing: 0.12em;
+  display: flex; gap: 20px; flex-wrap: wrap;
+  margin-bottom: 40px;
+  opacity: 0; animation: fadeUp 0.8s 0.1s forwards;
+}
+.hero .meta span::before { content: '◆ '; color: var(--accent); margin-right: 6px; }
+.hero h1 {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(48px, 9vw, 140px);
+  line-height: 0.95; letter-spacing: -0.04em;
+  color: var(--ink-0); margin: 0 0 20px;
+}
+.hero h1 .word {
+  display: inline-block;
+  opacity: 0; transform: translateY(40px);
+  animation: wordIn 0.9s forwards;
+}
+.hero h1 .word:nth-child(1) { animation-delay: 0.2s; }
+.hero h1 .word:nth-child(2) { animation-delay: 0.35s; }
+.hero h1 em {
+  font-style: italic; font-weight: 300;
+  color: var(--accent);
+  font-variation-settings: "opsz" 144;
+}
+@keyframes wordIn { to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero .tagline {
+  font-family: var(--font-mono); font-size: 15px;
+  color: var(--ink-1);
+  max-width: 580px;
+  margin: 32px 0 48px; line-height: 1.7;
+  opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+}
+.hero .tagline .pulse {
+  display: inline-block; width: 8px; height: 8px;
+  background: var(--accent-2); border-radius: 50%;
+  margin-right: 8px; animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-2); }
+  50%      { box-shadow: 0 0 0 10px transparent; }
+}
+.hero .contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  max-width: 900px;
+  opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
+}
+.hero .contact-grid a {
+  background: var(--bg-1);
+  padding: 20px 24px;
+  text-decoration: none; color: var(--ink-1);
+  font-family: var(--font-mono); font-size: 13px;
+  display: flex; flex-direction: column; gap: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.hero .contact-grid a:hover { background: var(--bg-2); color: var(--accent); }
+.hero .contact-grid a .label {
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--ink-3);
+}
+.scroll-hint {
+  position: absolute; bottom: 40px; left: 40px;
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--ink-3);
+  text-transform: uppercase; letter-spacing: 0.2em;
+  display: flex; align-items: center; gap: 12px;
+}
+.scroll-hint .line {
+  width: 60px; height: 1px;
+  background: var(--ink-3);
+  position: relative; overflow: hidden;
+}
+.scroll-hint .line::after {
+  content: ''; position: absolute; inset: 0;
+  background: var(--accent);
+  animation: slide 2s infinite;
+}
+@keyframes slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
-header p {
-  color:#94a3b8;
+/* ===== SECTION FRAMEWORK ===== */
+section.block {
+  max-width: 1280px; margin: 0 auto;
+  padding: 100px 40px; position: relative;
+}
+.section-head {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 40px; align-items: baseline;
+  margin-bottom: 60px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line-strong);
+}
+.section-head .num {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--accent); letter-spacing: 0.15em;
+}
+.section-head h2 {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(32px, 5vw, 64px);
+  line-height: 1; letter-spacing: -0.03em;
+  color: var(--ink-0); margin: 0;
+}
+.section-head h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+@media (max-width: 720px) {
+  .section-head { grid-template-columns: 1fr; gap: 12px; }
+  section.block { padding: 60px 20px; }
 }
 
-header a {
-  color:#38bdf8;
-  text-decoration:none;
-  margin:0 10px;
-  font-weight:500;
+/* ===== PROFILE ===== */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 40px;
 }
+.profile-grid .label {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--ink-3);
+  text-transform: uppercase; letter-spacing: 0.18em;
+  padding-top: 6px;
+}
+.profile-grid p {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 1.4; color: var(--ink-0);
+  margin: 0; letter-spacing: -0.01em;
+}
+.profile-grid p em { font-style: italic; color: var(--accent); font-weight: 400; }
+@media (max-width: 720px) { .profile-grid { grid-template-columns: 1fr; gap: 16px; } }
 
-/* ===== SECTION ===== */
-section {
-  max-width:1100px;
-  margin:auto;
-  padding:50px 20px;
+/* ===== EXPERIENCE TIMELINE ===== */
+.exp-item {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 40px; padding: 40px 0;
+  border-top: 1px solid var(--line);
+  position: relative;
+  transition: background 0.3s;
 }
-
-h2 {
-  border-left:4px solid #38bdf8;
-  padding-left:10px;
-  margin-bottom:20px;
+.exp-item:first-child { border-top: none; padding-top: 0; }
+.exp-item:hover { background: linear-gradient(90deg, transparent, rgba(255, 87, 34, 0.03), transparent); }
+.exp-item .when {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--ink-2); letter-spacing: 0.05em;
 }
-
-/* ===== CARDS ===== */
-.card {
-  background: rgba(30,41,59,0.6);
-  backdrop-filter: blur(10px);
-  padding:20px;
-  margin:20px 0;
-  border-radius:16px;
-  transition:0.3s;
-  border:1px solid rgba(255,255,255,0.08);
+.exp-item .when .now {
+  display: inline-block;
+  background: var(--accent); color: var(--bg-0);
+  padding: 2px 8px; border-radius: 2px;
+  font-weight: 500; font-size: 10px;
+  letter-spacing: 0.1em; margin-left: 6px;
 }
-
-.card:hover {
-  transform:translateY(-8px);
-  box-shadow:0 0 25px rgba(56,189,248,0.3);
+.exp-item h3 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(24px, 3vw, 36px);
+  letter-spacing: -0.02em; color: var(--ink-0);
+  margin: 0 0 6px; line-height: 1.1;
 }
-
-/* ===== PROJECT GRID ===== */
-.projects {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
-  gap:20px;
+.exp-item .org {
+  font-family: var(--font-mono); font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 20px; display: block;
 }
+.exp-item ul { list-style: none; padding: 0; margin: 0; }
+.exp-item li {
+  padding: 8px 0 8px 24px;
+  position: relative;
+  color: var(--ink-1); font-size: 15px; line-height: 1.6;
+}
+.exp-item li::before {
+  content: '→'; position: absolute; left: 0;
+  color: var(--accent); font-family: var(--font-mono);
+}
+@media (max-width: 720px) { .exp-item { grid-template-columns: 1fr; gap: 12px; } }
 
 /* ===== SKILLS ===== */
-.skills span {
-  display:inline-block;
-  background:linear-gradient(90deg,#38bdf8,#a78bfa);
-  color:#020617;
-  padding:6px 12px;
-  margin:5px;
-  border-radius:20px;
-  font-size:13px;
-  font-weight:600;
+.skills-stack {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.skill-cell {
+  background: var(--bg-1);
+  padding: 32px 28px;
+  transition: background 0.3s;
+  position: relative; overflow: hidden;
+}
+.skill-cell::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), var(--glow), transparent 50%);
+  opacity: 0; transition: opacity 0.3s;
+  pointer-events: none;
+}
+.skill-cell:hover { background: var(--bg-2); }
+.skill-cell:hover::before { opacity: 1; }
+.skill-cell .num {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--accent); letter-spacing: 0.15em;
+  margin-bottom: 14px; display: block;
+}
+.skill-cell h3 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: 22px; letter-spacing: -0.01em;
+  color: var(--ink-0); margin: 0 0 16px;
+}
+.skill-cell .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.skill-cell .tag {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--ink-1);
+  background: rgba(245, 241, 232, 0.04);
+  border: 1px solid var(--line);
+  padding: 4px 10px; border-radius: 100px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.skill-cell .tag:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ===== PROJECTS ===== */
+.project {
+  display: grid; gap: 24px;
+  padding: 48px 0;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+.project:first-child { border-top: none; padding-top: 0; }
+.project .top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline; gap: 20px;
+}
+.project h3 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(28px, 4vw, 48px);
+  letter-spacing: -0.03em; color: var(--ink-0);
+  margin: 0; line-height: 1.05;
+  transition: color 0.3s;
+}
+.project:hover h3 { color: var(--accent-soft); }
+.project h3 em { font-style: italic; color: var(--accent); }
+.project .when {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--ink-2); white-space: nowrap;
+}
+.project .body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px; align-items: start;
+}
+.project p.summary {
+  font-size: 16px; line-height: 1.7;
+  color: var(--ink-1); margin: 0;
+}
+.project ul { list-style: none; padding: 0; margin: 0; }
+.project li {
+  padding: 6px 0 6px 22px; position: relative;
+  font-size: 14px; color: var(--ink-1); line-height: 1.55;
+}
+.project li::before {
+  content: '+'; position: absolute; left: 0;
+  color: var(--accent); font-family: var(--font-mono);
+  font-weight: 500;
+}
+.project .tech {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 16px;
+}
+.project .tech span {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--ink-2);
+  border: 1px solid var(--line);
+  padding: 3px 10px; border-radius: 100px;
+}
+.project .links { display: flex; gap: 14px; margin-top: 24px; }
+.project .links a {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--ink-1); text-decoration: none;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 4px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.project .links a:hover { color: var(--accent); border-color: var(--accent); }
+@media (max-width: 720px) {
+  .project .body { grid-template-columns: 1fr; gap: 20px; }
+  .project .top { grid-template-columns: 1fr; }
 }
 
-/* ===== LINKS ===== */
-a {
-  color:#38bdf8;
+/* ===== EDUCATION + AWARDS ===== */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
 }
+.two-col h3 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: 24px; color: var(--ink-0);
+  margin: 0 0 8px; letter-spacing: -0.01em;
+}
+.two-col .edu-item {
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+}
+.two-col .edu-item:first-of-type { border-top: none; padding-top: 0; }
+.two-col .edu-item p {
+  font-family: var(--font-mono); font-size: 13px;
+  color: var(--ink-2); margin: 0;
+}
+.awards-list { list-style: none; padding: 0; margin: 0; }
+.awards-list li {
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 16px; align-items: start;
+}
+.awards-list li:first-child { border-top: none; padding-top: 0; }
+.awards-list li::before {
+  content: '★'; color: var(--accent);
+  font-size: 14px; padding-top: 2px;
+}
+.awards-list a {
+  color: var(--ink-1); text-decoration: none;
+  font-size: 14px; line-height: 1.5;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.awards-list a:hover { color: var(--accent); border-color: var(--accent); }
+.awards-list .static { color: var(--ink-1); font-size: 14px; line-height: 1.5; }
+@media (max-width: 720px) { .two-col { grid-template-columns: 1fr; gap: 40px; } }
 
-.card a {
-  display:inline-block;
-  margin-top:10px;
-  margin-right:10px;
-  transition:0.2s;
+/* ===== LANGUAGES ===== */
+.langs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
 }
-
-.card a:hover {
-  color:#a78bfa;
+.lang { background: var(--bg-1); padding: 32px; }
+.lang .name {
+  font-family: var(--font-display); font-size: 32px;
+  color: var(--ink-0); margin: 0 0 8px;
+  letter-spacing: -0.02em;
 }
+.lang .level {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--ink-2); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 16px;
+}
+.lang .bar {
+  height: 2px;
+  background: var(--line-strong);
+  position: relative; overflow: hidden;
+}
+.lang .bar::after {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  background: var(--accent);
+  width: var(--w, 50%);
+  transform-origin: left;
+  animation: barFill 1.4s 0.3s cubic-bezier(0.65, 0, 0.35, 1) backwards;
+  transform: scaleX(0);
+}
+@keyframes barFill { to { transform: scaleX(1); } }
 
 /* ===== FOOTER ===== */
 footer {
-  text-align:center;
-  padding:20px;
-  background:#020617;
-  color:#94a3b8;
+  padding: 80px 40px 40px;
+  max-width: 1280px; margin: 0 auto;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end; gap: 40px;
+}
+footer .big {
+  font-family: var(--font-display); font-style: italic;
+  font-weight: 300;
+  font-size: clamp(40px, 7vw, 96px);
+  line-height: 0.95; letter-spacing: -0.03em;
+  color: var(--ink-0);
+}
+footer .big em { color: var(--accent); }
+footer .meta {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--ink-3);
+  text-transform: uppercase; letter-spacing: 0.15em;
+  text-align: right; line-height: 2;
+}
+footer .meta a {
+  color: var(--ink-1); text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+}
+@media (max-width: 720px) {
+  footer { grid-template-columns: 1fr; }
+  footer .meta { text-align: left; }
 }
 
+/* ===== REVEAL ON SCROLL ===== */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+::selection { background: var(--accent); color: var(--bg-0); }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Gokul Venugopal</h1>
-  <p>Data Analyst | MSc Digital Engineering</p>
-  <p>Magdeburg, Germany</p>
-  <p>
-    <a href="https://www.linkedin.com/in/gokul-venugopal-/" target="_blank">LinkedIn</a> |
-    <a href="https://github.com/goku98-dev/Projects-DEV" target="_blank">GitHub</a>
+<div class="bg-grid"></div>
+<div class="bg-aurora"></div>
+<div class="noise"></div>
+
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<nav class="topbar">
+  <div class="logo">gokul<span class="dot">.</span>v</div>
+  <ul>
+    <li><a href="#work">work</a></li>
+    <li><a href="#skills">stack</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="meta">
+    <span>Magdeburg / DE</span>
+    <span>MSc Digital Engineering</span>
+    <span>Open to opportunities</span>
+  </div>
+
+  <h1>
+    <span class="word">Building</span>
+    <span class="word"><em>data&nbsp;systems</em></span><br>
+    <span class="word" style="animation-delay:0.5s;">that think</span>
+    <span class="word" style="animation-delay:0.65s;">for themselves.</span>
+  </h1>
+
+  <p class="tagline">
+    <span class="pulse"></span>
+    Data &amp; AI/ML engineer with 3+ years bridging analytics, automation, and large language models. I design pipelines, dashboards, and agentic workflows — turning raw data into things people can actually use.
   </p>
-</header>
 
-<section>
-  <h2>🧠 Summary</h2>
-  <ul>
-    <li>MSc Digital Engineering (Computer Science) student with 3+ years of experience in data analytics and business intelligence.</li>
-    <li>Strong expertise in Python (pandas, NumPy), SQL, and Power BI for data analysis, visualization, and KPI-driven reporting.</li>
-    <li>Experienced in building ETL pipelines, performing exploratory data analysis (EDA), and applying statistical methods to transform complex datasets into actionable insights.</li>
-    <li>Skilled in designing interactive dashboards and delivering data-driven solutions for business decision-making.</li>
-    <li>Advanced user of Excel and MS Office tools with experience in documentation, reporting, and cross-functional stakeholder communication.</li>
-  </ul>
+  <div class="contact-grid">
+    <a href="mailto:gokulvenugopal24101998@gmail.com">
+      <span class="label">Email</span>
+      gokulvenugopal24101998@gmail.com
+    </a>
+    <a href="tel:+4915560085066">
+      <span class="label">Phone</span>
+      +49 1556 0085066
+    </a>
+    <a href="https://www.linkedin.com/in/gokul-venugopal-/" target="_blank" rel="noopener">
+      <span class="label">LinkedIn</span>
+      gokul-venugopal ↗
+    </a>
+    <a href="https://github.com/goku98-dev/Projects-DEV" target="_blank" rel="noopener">
+      <span class="label">GitHub</span>
+      goku98-dev ↗
+    </a>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <span class="line"></span>
+  </div>
 </section>
 
-<section>
-  <h2>💼 Professional Experience</h2>
-
-  <div class="card">
-    <h3>Applied Research Assistant – Otto von Guericke University</h3>
-    <p><i>Feb 2025 – Present</i></p>
-    <ul>
-      <li>Designed scalable data pipelines using Python (NumPy, pandas) to process 10,000+ behavioral and gaze-tracking records.</li>
-      <li>Built structured datasets using PostgreSQL for efficient querying and reproducible analytics workflows.</li>
-      <li>Performed EDA and statistical analysis to identify trends, correlations, and anomalies.</li>
-      <li>Developed interactive dashboards using Plotly and Streamlit to present insights.</li>
-      <li>Documented workflows and data models using Excel, Word, SharePoint, and Outlook.</li>
-    </ul>
+<!-- ===== PROFILE ===== -->
+<section class="block reveal" id="profile">
+  <div class="section-head">
+    <div class="num">— 01 / Profile</div>
+    <h2>About <em>the work</em></h2>
   </div>
-
-  <div class="card">
-    <h3>Data Analyst – Société Générale</h3>
-    <p><i>Sept 2021 – March 2024</i></p>
-    <ul>
-      <li>Built end-to-end ETL pipelines using Python and SQL for large-scale transactional data.</li>
-      <li>Optimized SQL queries, improving performance by ~25%.</li>
-      <li>Developed 15+ dashboards using Power BI and Tableau for business insights.</li>
-      <li>Automated data workflows, reducing manual effort by ~30%.</li>
-      <li>Performed EDA using Python and Excel to identify trends and anomalies.</li>
-      <li>Contributed to MY Ayvens product lifecycle, improving data access speed by ~30%.</li>
-      <li>Maintained documentation using Jira, Confluence, and MS Office tools.</li>
-    </ul>
+  <div class="profile-grid">
+    <div class="label">Bio</div>
+    <p>
+      Data-driven MSc student with three years across analytics and AI/ML.
+      Strong with <em>Python, SQL, and Git</em> — and increasingly drawn to
+      where ML, agents, and real workflows meet. Comfortable shipping ETL
+      pipelines, KPI dashboards, RAG systems, and LLM-powered tools that
+      hold up in production.
+    </p>
   </div>
-
-  <div class="card">
-    <h3>Machine Learning Intern – Pyze</h3>
-    <p><i>June 2020 – Aug 2020</i></p>
-    <ul>
-      <li>Performed EDA and feature engineering for ML models.</li>
-      <li>Validated models using statistical metrics and cross-validation.</li>
-      <li>Built visualizations for model performance analysis.</li>
-    </ul>
-  </div>
-
 </section>
 
-<section>
-  <h2>⚙️ Skills</h2>
-
-  <div class="card">
-    <h3>📊 Data Analytics</h3>
-    <p>Python (pandas, NumPy), Data Cleaning, ETL Pipelines, EDA, Feature Engineering, Statistical Analysis</p>
+<!-- ===== EXPERIENCE ===== -->
+<section class="block reveal" id="work">
+  <div class="section-head">
+    <div class="num">— 02 / Experience</div>
+    <h2>Where <em>it shipped</em></h2>
   </div>
 
-  <div class="card">
-    <h3>🤖 Machine Learning & AI</h3>
-    <p>TensorFlow, PyTorch, Scikit-learn, LLMs, LangChain, HuggingFace Transformers</p>
-  </div>
-
-  <div class="card">
-    <h3>📈 Visualization</h3>
-    <p>Power BI, Tableau, Plotly, Matplotlib, KPI Dashboards, Interactive Reporting</p>
-  </div>
-
-  <div class="card">
-    <h3>🗄️ Databases</h3>
-    <p>SQL Optimization, PostgreSQL, MongoDB, Data Transformation</p>
-  </div>
-
-  <div class="card">
-    <h3>🛠️ Tools & Workflow</h3>
-    <p>Git, CI/CD, Jupyter, Postman, Linux (bash), Agile Methodologies</p>
-  </div>
-
-  <div class="card">
-    <h3>📄 Productivity</h3>
-    <p>Excel, Google Sheets, MS Office Suite, Documentation & Reporting</p>
-  </div>
-
-<section>
-  <h2>🚀 Projects</h2>
-
-  <div class="projects">
-
-    <div class="card">
-      <h3>🌌 Exploratory Information Retrieval with Hierarchical 3D Visualization</h3>
-      <p><i>Nov 2025 – March 2026</i></p>
+  <div class="exp-item">
+    <div class="when">
+      Feb 2025 — Present
+      <span class="now">NOW</span>
+    </div>
+    <div>
+      <h3>Research Assistant — ML / AI</h3>
+      <span class="org">Otto von Guericke University · Germany</span>
       <ul>
-        <li>Processed and analyzed 10,000+ images using deep feature embeddings from a ResNet50 CNN model.</li>
-        <li>Built a machine learning pipeline using PCA and UMAP for dimensionality reduction and HDBSCAN for clustering.</li>
-        <li>Identified semantic relationships and hierarchical cluster structures through hyperparameter tuning.</li>
-        <li>Projected embeddings into 2D and 3D spaces and developed an interactive Unity visualization using a “planet and moons” metaphor.</li>
+        <li>Built Python pipelines (pandas, NumPy, PyTorch, TensorFlow) for CNN-based feature extraction; developed modular AI agents with tool-based workflows on 10,000+ records.</li>
+        <li>Developed LLM applications using LangChain with RAG and agentic workflows; applied vector embeddings for semantic analysis.</li>
+        <li>Performed EDA and statistical analysis to identify trends, correlations, and anomalies in behavioral and gaze-tracking data.</li>
+        <li>Built interactive Plotly &amp; Streamlit dashboards to communicate insights, and documented pipelines for maintainability.</li>
       </ul>
-      <p><b>Tech:</b> Python, PyTorch, TensorFlow, UMAP, HDBSCAN, Unity</p>
-      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Exploratory%20Information%20Retrieval%20with%20Hierarchical%203D%20Visualization#readme" target="_blank">📄 Readme</a>
-      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Exploratory%20Information%20Retrieval%20with%20Hierarchical%203D%20Visualization" target="_blank">💻 Code</a>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="when">Sept 2021 — Mar 2024</div>
+    <div>
+      <h3>Software Engineer</h3>
+      <span class="org">Société Générale Global Solutions · India</span>
+      <ul>
+        <li>Built end-to-end ETL pipelines using Python, SQL, and PowerShell scripting for large-scale transactional data, automating engineering workflows and business reporting.</li>
+        <li>Optimized SQL queries and transformations, improving performance by ~25%.</li>
+        <li>Developed 15+ KPI dashboards using Power BI and Tableau, collaborating with cross-functional teams to support decision-making.</li>
+        <li>Automated workflows and CI/CD using Azure DevOps and Docker, improving deliverable scalability.</li>
+        <li>Contributed to MY Ayvens PDLC by designing data-driven features with stakeholders, improving reporting efficiency by ~30%.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="when">Jun 2020 — Aug 2020</div>
+    <div>
+      <h3>Machine Learning Intern</h3>
+      <span class="org">Pyze</span>
+      <ul>
+        <li>Performed EDA, feature engineering, and model validation using statistical metrics and cross-validation.</li>
+        <li>Built visualizations for model performance analysis.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SKILLS ===== -->
+<section class="block reveal" id="skills">
+  <div class="section-head">
+    <div class="num">— 03 / Stack</div>
+    <h2>The <em>tools</em> I reach for</h2>
+  </div>
+
+  <div class="skills-stack">
+    <div class="skill-cell">
+      <span class="num">/ 01</span>
+      <h3>Machine Learning &amp; AI</h3>
+      <div class="tags">
+        <span class="tag">LLMs</span>
+        <span class="tag">RAG</span>
+        <span class="tag">LangChain</span>
+        <span class="tag">LLaMA</span>
+        <span class="tag">AI Agents</span>
+        <span class="tag">Prompt Engineering</span>
+        <span class="tag">PyTorch</span>
+        <span class="tag">TensorFlow</span>
+        <span class="tag">Hugging Face</span>
+        <span class="tag">Scikit-learn</span>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>🚗 Car Rental Analytics & Profit Prediction System</h3>
-      <p><i>Mar 2025 – July 2025</i></p>
-      <ul>
-        <li>Developed an end-to-end data analytics and ML pipeline using PostgreSQL, Python, and Streamlit.</li>
-        <li>Modeled and normalized rental transaction data and created SQL analytics views.</li>
-        <li>Performed KPI analysis using Pandas to derive business insights.</li>
-        <li>Implemented Linear Regression and Random Forest models to predict rental profitability.</li>
-        <li>Built an interactive dashboard for visualization and decision support.</li>
-      </ul>
-      <p><b>Tech:</b> PostgreSQL, Python, Pandas, Scikit-learn, Streamlit</p>
-      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Car_rental_analytics#readme" target="_blank">📄 Readme</a>
-      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Car_rental_analytics" target="_blank">💻 Code</a>
+    <div class="skill-cell">
+      <span class="num">/ 02</span>
+      <h3>Data &amp; Programming</h3>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">SQL</span>
+        <span class="tag">PowerShell</span>
+        <span class="tag">Bash</span>
+        <span class="tag">C#</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">pandas</span>
+        <span class="tag">NumPy</span>
+        <span class="tag">ETL</span>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>🤖 Multi-PDF ChatApp AI LLM Agent</h3>
-      <p><i>Sept 2025 – Oct 2025</i></p>
-      <ul>
-        <li>Developed a Streamlit-based application for conversational Q&A across multiple PDF documents.</li>
-        <li>Implemented document ingestion, chunking, indexing, and vector-based semantic retrieval.</li>
-        <li>Enabled real-time chat with LLMs using LangChain and embedding-based search.</li>
-        <li>Integrated multiple LLM providers including OpenAI GPT and Google Generative AI.</li>
-      </ul>
-      <p><b>Tech:</b> Python, Streamlit, LangChain, OpenAI, Google Generative AI</p>
-      <a href="https://github.com/goku98-dev/Projects-DEV/blob/main/Multi-PDFs_ChatApp_LLM_AgentAI-main/README.md" target="_blank">📄 Readme</a>
-      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Multi-PDFs_ChatApp_LLM_AgentAI-main" target="_blank">💻 Code</a>
+    <div class="skill-cell">
+      <span class="num">/ 03</span>
+      <h3>Visualization</h3>
+      <div class="tags">
+        <span class="tag">Power BI</span>
+        <span class="tag">Tableau</span>
+        <span class="tag">Grafana</span>
+        <span class="tag">Plotly</span>
+        <span class="tag">Streamlit</span>
+        <span class="tag">Matplotlib</span>
+      </div>
     </div>
 
+    <div class="skill-cell">
+      <span class="num">/ 04</span>
+      <h3>Databases</h3>
+      <div class="tags">
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">SQL Optimization</span>
+        <span class="tag">Vector DBs</span>
+      </div>
+    </div>
+
+    <div class="skill-cell">
+      <span class="num">/ 05</span>
+      <h3>Tools &amp; Workflow</h3>
+      <div class="tags">
+        <span class="tag">Git</span>
+        <span class="tag">VS Code</span>
+        <span class="tag">GitHub Copilot</span>
+        <span class="tag">Azure DevOps</span>
+        <span class="tag">Docker</span>
+        <span class="tag">Postman</span>
+        <span class="tag">Jira</span>
+        <span class="tag">Confluence</span>
+        <span class="tag">CI/CD</span>
+      </div>
+    </div>
+
+    <div class="skill-cell">
+      <span class="num">/ 06</span>
+      <h3>Productivity</h3>
+      <div class="tags">
+        <span class="tag">Excel</span>
+        <span class="tag">MS Office</span>
+        <span class="tag">SharePoint</span>
+        <span class="tag">Documentation</span>
+        <span class="tag">Agile</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROJECTS ===== -->
+<section class="block reveal" id="projects">
+  <div class="section-head">
+    <div class="num">— 04 / Selected Work</div>
+    <h2>Things <em>I've built</em></h2>
   </div>
 
+  <div class="project">
+    <div class="top">
+      <h3>Exploratory Information Retrieval / <em>Hierarchical 3D Visualization</em></h3>
+      <span class="when">Nov 2025 — Mar 2026</span>
+    </div>
+    <div class="body">
+      <p class="summary">A pipeline that turns 10,000+ images into a navigable 3D universe — using ResNet50 embeddings, UMAP/PCA reduction, and HDBSCAN clustering — rendered in Unity with a "planet and moons" metaphor for hierarchical browsing.</p>
+      <ul>
+        <li>Deep feature embeddings via ResNet50 CNN</li>
+        <li>PCA + UMAP for dimensionality reduction</li>
+        <li>HDBSCAN clustering, hyperparameter tuned for semantic structure</li>
+        <li>Interactive Unity visualization with custom navigation</li>
+      </ul>
+    </div>
+    <div class="tech">
+      <span>Python</span><span>PyTorch</span><span>TensorFlow</span><span>UMAP</span><span>HDBSCAN</span><span>Unity</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Exploratory%20Information%20Retrieval%20with%20Hierarchical%203D%20Visualization#readme" target="_blank" rel="noopener">Read.me ↗</a>
+      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Exploratory%20Information%20Retrieval%20with%20Hierarchical%203D%20Visualization" target="_blank" rel="noopener">Source ↗</a>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="top">
+      <h3>Invoice <em>LayoutLM Extractor</em></h3>
+      <span class="when">2025</span>
+    </div>
+    <div class="body">
+      <p class="summary">Layout-aware structured-data extraction for engineering and technical documents. LayoutLMv3 handles spatial reasoning; LLaMA layers contextual interpretation on top.</p>
+      <ul>
+        <li>LayoutLMv3 for token-level structured extraction</li>
+        <li>LLaMA for contextual decision-making on complex layouts</li>
+        <li>Evaluated on diverse, unseen invoice formats</li>
+      </ul>
+    </div>
+    <div class="tech">
+      <span>Python</span><span>PyTorch</span><span>Hugging Face</span><span>LayoutLMv3</span><span>LLaMA</span><span>NLP</span>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="top">
+      <h3>Multi-PDF <em>ChatApp Agent</em></h3>
+      <span class="when">Sept — Oct 2025</span>
+    </div>
+    <div class="body">
+      <p class="summary">A conversational interface across multiple PDFs — built with LangChain, RAG, and agentic workflows. Ingests, chunks, and indexes documents, then answers in real time using OpenAI or Google Generative AI as the backing model.</p>
+      <ul>
+        <li>Document ingestion, chunking, and vector indexing</li>
+        <li>Semantic retrieval with embedding search</li>
+        <li>Agentic workflow orchestration</li>
+        <li>Multi-provider LLM support</li>
+      </ul>
+    </div>
+    <div class="tech">
+      <span>Python</span><span>Streamlit</span><span>LangChain</span><span>OpenAI</span><span>Google GenAI</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/goku98-dev/Projects-DEV/blob/main/Multi-PDFs_ChatApp_LLM_AgentAI-main/README.md" target="_blank" rel="noopener">Read.me ↗</a>
+      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Multi-PDFs_ChatApp_LLM_AgentAI-main" target="_blank" rel="noopener">Source ↗</a>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="top">
+      <h3>Car Rental Analytics / <em>Profit Prediction</em></h3>
+      <span class="when">Mar — Jul 2025</span>
+    </div>
+    <div class="body">
+      <p class="summary">End-to-end analytics + ML pipeline on rental transaction data: PostgreSQL modeling, KPI analysis in pandas, regression-based profit prediction, and a Streamlit dashboard for decision support.</p>
+      <ul>
+        <li>Normalized data model + SQL analytics views</li>
+        <li>KPI analysis with pandas</li>
+        <li>Linear Regression + Random Forest profit models</li>
+        <li>Interactive Streamlit dashboard</li>
+      </ul>
+    </div>
+    <div class="tech">
+      <span>PostgreSQL</span><span>Python</span><span>pandas</span><span>Scikit-learn</span><span>Streamlit</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Car_rental_analytics#readme" target="_blank" rel="noopener">Read.me ↗</a>
+      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/Car_rental_analytics" target="_blank" rel="noopener">Source ↗</a>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="top">
+      <h3>Protein–Protein Interaction / <em>Complex Detection via Evolutionary Algorithms</em></h3>
+      <span class="when">Bioinformatics</span>
+    </div>
+    <div class="body">
+      <p class="summary">An evolutionary-algorithm approach to detecting protein complexes in PPI networks — a core bioinformatics problem. Uses a frequency-matrix chromosome encoding, modularity-based fitness, and Q-guided mutation strategies to cluster proteins into biologically meaningful groups. Achieved 0.90 precision on the Collins PPI dataset.</p>
+      <ul>
+        <li>Frequency-matrix encoding for candidate complex sets</li>
+        <li>Three mutation operators: Canonical, Topological, Delta</li>
+        <li>Q-guided mutation for stronger exploration</li>
+        <li>Modularity fitness — maximize intra-cluster density, minimize inter-cluster edges</li>
+        <li>Validated on Yeast D1, Yeast D2, and Collins benchmark networks</li>
+      </ul>
+    </div>
+    <div class="tech">
+      <span>MATLAB</span><span>Evolutionary Algorithms</span><span>Graph Clustering</span><span>Bioinformatics</span><span>Modularity Optimization</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/goku98-dev/Projects-DEV/blob/main/PPIComplexDetctionEA/readme.md" target="_blank" rel="noopener">Read.me ↗</a>
+      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/PPIComplexDetctionEA" target="_blank" rel="noopener">Source ↗</a>
+    </div>
+  </div>
 </section>
 
-<section>
-  <h2>🎓 Education</h2>
-  <div class="card">MSc Digital Engineering – OVGU Magdeburg Germany</div>
-  <div class="card">Bachelor's in  Electronics & Communication – RNS Institute of Technology Bangalore India</div>
+<!-- ===== EDUCATION + AWARDS ===== -->
+<section class="block reveal">
+  <div class="section-head">
+    <div class="num">— 05 / Background</div>
+    <h2>Education <em>&amp;</em> recognition</h2>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="edu-item">
+        <h3>MSc Digital Engineering</h3>
+        <p>Otto von Guericke University · 2024 — Present</p>
+      </div>
+      <div class="edu-item">
+        <h3>BE, Electronics &amp; Communication</h3>
+        <p>RNS Institute of Technology · 2017 — 2021</p>
+      </div>
+    </div>
+
+    <div>
+      <ul class="awards-list">
+        <li><span class="static"><strong>SPOT Award</strong> — Société Générale, for outstanding ownership in project delivery among Young Graduates.</span></li>
+        <li><a href="https://credentials.databricks.com/733333ea-c808-4c56-b839-42f48088014c#acc.mbU2NyaV" target="_blank" rel="noopener">Generative AI Fundamentals — Databricks ↗</a></li>
+        <li><a href="https://drive.google.com/file/d/1EAa1ro2qXB4he3_Jb1kVNg9dUu3yGn9i/view" target="_blank" rel="noopener">Best Project Award — 4th National Conference on Emerging Trends ↗</a></li>
+        <li><a href="https://drive.google.com/file/d/1uZ0mZKEFRYnvyYUr0sjW-21lAfsgdH1W/view" target="_blank" rel="noopener">AI: Machine Learning using Python &amp; Data Visualization ↗</a></li>
+        <li><a href="https://www.datacamp.com/completed/statement-of-accomplishment/course/297a268f8651edd4fa0c8b1c3026f7076e9e2192" target="_blank" rel="noopener">Developing LLM Applications with LangChain — DataCamp ↗</a></li>
+      </ul>
+    </div>
+  </div>
 </section>
 
-<section>
-  <h2>🌍 Languages</h2>
-  <p>German (B1) | English (C1)</p>
+<!-- ===== LANGUAGES ===== -->
+<section class="block reveal">
+  <div class="section-head">
+    <div class="num">— 06 / Languages</div>
+    <h2>How I <em>communicate</em></h2>
+  </div>
+  <div class="langs">
+    <div class="lang">
+      <h3 class="name">English</h3>
+      <div class="level">C1 · Advanced</div>
+      <div class="bar" style="--w: 90%;"></div>
+    </div>
+    <div class="lang">
+      <h3 class="name">German</h3>
+      <div class="level">B1 · Intermediate</div>
+      <div class="bar" style="--w: 60%;"></div>
+    </div>
+  </div>
 </section>
 
-<section>
-  <h2>🏆 Awards</h2>
-  <ul>
-    <li>Best Project Award</li>
-    <li>SPOT Award – Société Générale</li>
-    <li>ML & LangChain Certifications</li>
-  </ul>
-</section>
-
-<footer>
-  <p>© 2026 Gokul Venugopal</p>
+<!-- ===== FOOTER ===== -->
+<footer id="contact">
+  <div class="big">Let's <em>build</em> something.</div>
+  <div class="meta">
+    © 2026 Gokul Venugopal<br>
+    Magdeburg / DE<br>
+    <a href="mailto:gokulvenugopal24101998@gmail.com">say hello ↗</a>
+  </div>
 </footer>
+
+<script>
+// ===== Custom cursor =====
+(function() {
+  const cursor = document.querySelector('.cursor');
+  const ring = document.querySelector('.cursor-ring');
+  if (!cursor || !ring) return;
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', (e) => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+  });
+  function loop() {
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(loop);
+  }
+  loop();
+  document.querySelectorAll('a, button, .skill-cell, .project, .exp-item, .lang').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+  });
+})();
+
+// ===== Skill cell mouse glow tracking =====
+document.querySelectorAll('.skill-cell').forEach(cell => {
+  cell.addEventListener('mousemove', (e) => {
+    const rect = cell.getBoundingClientRect();
+    cell.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+    cell.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+  });
+});
+
+// ===== Reveal on scroll =====
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
 
 </body>
 </html>
