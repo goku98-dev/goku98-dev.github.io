@@ -33,6 +33,9 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+
+/* Account for fixed nav when jumping to anchors */
+[id] { scroll-margin-top: 90px; }
 body {
   margin: 0;
   font-family: var(--font-body);
@@ -195,20 +198,29 @@ nav.topbar a:hover { color: var(--accent); }
 }
 .hero .contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1px;
   background: var(--line);
   border: 1px solid var(--line);
-  max-width: 900px;
+  max-width: 1000px;
   opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
 }
 .hero .contact-grid a {
   background: var(--bg-1);
   padding: 20px 24px;
   text-decoration: none; color: var(--ink-1);
-  font-family: var(--font-mono); font-size: 13px;
+  font-family: var(--font-mono); font-size: 12px;
   display: flex; flex-direction: column; gap: 4px;
   transition: background 0.2s, color 0.2s;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+/* Give email cell extra room since it's the longest */
+.hero .contact-grid a.email-cell {
+  grid-column: span 2;
+}
+@media (max-width: 720px) {
+  .hero .contact-grid a.email-cell { grid-column: span 1; }
 }
 .hero .contact-grid a:hover { background: var(--bg-2); color: var(--accent); }
 .hero .contact-grid a .label {
@@ -605,8 +617,8 @@ footer .meta a {
     Data &amp; AI/ML engineer with 3+ years bridging analytics, automation, and large language models. I design pipelines, dashboards, and agentic workflows — turning raw data into things people can actually use.
   </p>
 
-  <div class="contact-grid">
-    <a href="mailto:gokulvenugopal24101998@gmail.com">
+  <div class="contact-grid" id="contact">
+    <a href="mailto:gokulvenugopal24101998@gmail.com" class="email-cell">
       <span class="label">Email</span>
       gokulvenugopal24101998@gmail.com
     </a>
@@ -967,7 +979,7 @@ footer .meta a {
 </section>
 
 <!-- ===== FOOTER ===== -->
-<footer id="contact">
+<footer>
   <div class="big">Let's <em>build</em> something.</div>
   <div class="meta">
     © 2026 Gokul Venugopal<br>
