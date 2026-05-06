@@ -460,7 +460,7 @@ section.block {
   border: 1px solid var(--line);
   padding: 3px 10px; border-radius: 100px;
 }
-.project .links { display: flex; gap: 14px; margin-top: 24px; }
+.project .links { display: flex; gap: 14px; margin-top: 24px; flex-wrap: wrap; }
 .project .links a {
   font-family: var(--font-mono); font-size: 12px;
   color: var(--ink-1); text-decoration: none;
@@ -470,6 +470,14 @@ section.block {
   transition: color 0.2s, border-color 0.2s;
 }
 .project .links a:hover { color: var(--accent); border-color: var(--accent); }
+.project .links a.live {
+  color: var(--accent-2);
+  border-bottom-color: var(--accent-2);
+}
+.project .links a.live:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
 @media (max-width: 720px) {
   .project .body { grid-template-columns: 1fr; gap: 20px; }
   .project .top { grid-template-columns: 1fr; }
@@ -836,6 +844,32 @@ footer .meta a {
   <div class="section-head">
     <div class="num">— 04 / Selected Work</div>
     <h2>Things <em>I've built</em></h2>
+  </div>
+
+  <div class="project">
+    <div class="top">
+      <h3>DeskPilot Lite — <em>Autonomous IT/HR Helpdesk Agent</em></h3>
+      <span class="when">Apr — May 2026</span>
+    </div>
+    <div class="body">
+      <p class="summary">A multi-agent system that triages and resolves internal helpdesk tickets end-to-end. Router classifies, Resolver acts through a tool-use loop over mocked enterprise systems (IdP, HRIS, SaaS provisioner), Escalator writes structured human handoffs. Deterministic guardrails wrap every credential operation; a 60-ticket labeled eval harness measures accuracy, cost, and adversarial robustness.</p>
+      <ul>
+        <li>3-agent pipeline: Router → Resolver → Escalator, all on Claude Haiku 4.5</li>
+        <li>Hybrid RAG over a 25-article policy KB via ChromaDB</li>
+        <li>Deterministic Python guardrails around every real-world action — not prompt-based safety</li>
+        <li>Memory loop: past resolutions retrieved by similarity to improve future tickets</li>
+        <li>JSONL trace logging with per-step token, cost, and latency tracking</li>
+        <li>60-ticket labeled eval set incl. 8 adversarial cases; 85% triage accuracy, $0.005 / ticket</li>
+      </ul>
+    </div>
+    <div class="tech">
+      <span>Python</span><span>Anthropic API</span><span>Claude Haiku 4.5</span><span>ChromaDB</span><span>Pydantic v2</span><span>SQLite</span><span>Streamlit</span><span>Faker</span>
+    </div>
+    <div class="links">
+      <a class="live" href="https://projects-dev-h3f2z6n2klftxzm3zpywrk.streamlit.app/" target="_blank" rel="noopener">Live Demo ↗</a>
+      <a href="https://github.com/goku98-dev/Projects-DEV/blob/main/DeskPilot-Helpdesk-Agent/README.md" target="_blank" rel="noopener">Read.me ↗</a>
+      <a href="https://github.com/goku98-dev/Projects-DEV/tree/main/DeskPilot-Helpdesk-Agent" target="_blank" rel="noopener">Source ↗</a>
+    </div>
   </div>
 
   <div class="project">
